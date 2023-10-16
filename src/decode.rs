@@ -33,8 +33,8 @@ type Result<T> = std::result::Result<T, Error>;
 /// ```
 pub struct Decoder {
     decoder: DecoderSplit,
-    reader: Reader,
-    reader_stream_index: usize,
+    pub reader: Reader,
+    pub reader_stream_index: usize,
 }
 
 impl Decoder {
@@ -184,20 +184,20 @@ impl Decoder {
         (self.decoder, self.reader, self.reader_stream_index)
     }
 
-    /// Get the decoders input size (resolution dimensions): width and height.
+    /// Get the decoder's input size (resolution dimensions): width and height.
     #[inline(always)]
     pub fn size(&self) -> (u32, u32) {
         self.decoder.size
     }
 
-    /// Get the decoders output size after resizing is applied (resolution dimensions): width and
+    /// Get the decoder's output size after resizing is applied (resolution dimensions): width and
     /// height.
     #[inline(always)]
     pub fn size_out(&self) -> (u32, u32) {
         self.decoder.size_out
     }
 
-    /// Get the decoders input frame rate as floating-point value.
+    /// Get the decoder's input frame rate as floating-point value.
     pub fn frame_rate(&self) -> f32 {
         let frame_rate = self
             .reader
@@ -214,6 +214,11 @@ impl Decoder {
         } else {
             0.0
         }
+    }
+
+    /// Get the number of frames in the video
+    pub fn frame_count(&self) -> i64 {
+        self.reader.input.stream(self.reader_stream_index).map(|stream| stream.frames()).unwrap_or(0)
     }
 }
 
