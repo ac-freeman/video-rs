@@ -1,6 +1,6 @@
 [package]
-name = "video-rs"
-description = "High-level video toolkit based on ffmpeg."
+name = "video-rs-adder-dep"
+description = "High-level video toolkit based on ffmpeg. Slightly modified to expose internals for the ADDER project."
 keywords = ["video", "ffmpeg", "encoding", "decoding", "muxing"]
 categories = ["multimedia", "multimedia::video"]
 version = "0.4.1"
